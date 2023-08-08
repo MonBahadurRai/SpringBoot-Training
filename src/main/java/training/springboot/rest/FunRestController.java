@@ -6,7 +6,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class FunRestController {
-//    expose "/" that return "HELLO WORLD"
 
 
     //Reading the application.properties file values
@@ -15,9 +14,15 @@ public class FunRestController {
     //  project.name=Spring Boot Training
 
 
+    //Expose "/" that return "HELLO WORLD"
     @GetMapping(value = "")
     private String sayHelloWorld() {
         System.out.println(this.projectName);
         return "Hello World!";
+    }
+    @GetMapping(value = "mon")
+    private String sayMon() {
+        System.out.println(this.projectName);
+        return "Hello Mon!";
     }
 }
