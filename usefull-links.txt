@@ -1,2 +1,3 @@
 
+//    git clone -c core.longpaths=true https://github.com/darbyluv2code/spring-boot-3-spring-6-hibernate-for-beginners.git
 Starters ://https://docs.spring.io/spring-boot/docs/current/reference/htmlsingle/#using.build-systems.starters
