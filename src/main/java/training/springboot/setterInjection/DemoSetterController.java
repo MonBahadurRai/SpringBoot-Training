@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 import training.springboot.constructorInjection.Coach;
+import training.springboot.constructorInjection.CricketCoach;
 
 @RestController
 public class DemoSetterController {
