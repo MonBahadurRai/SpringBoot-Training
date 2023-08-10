@@ -8,24 +8,25 @@ import org.springframework.web.bind.annotation.RestController;
 public class DemoController {
 
 
-//    private final CricketCoach cricketCoach;
+//    private final CricketSCoach cricketCoach;
     private Coach coach;
 
 
 //    constructor Injection
 
     //x For Single Dependency @Autowired is optional
-//    public DemoController(CricketCoach cricketCoach) {
+//    public DemoController(CricketSCoach cricketCoach) {
 //        this.cricketCoach = cricketCoach;
 //    }
 
     public DemoController(Coach coach) {
+        System.out.println("Constructor : "+getClass().getSimpleName());
         this.coach = coach;
     }
 
 
 //    @Autowired
-//    public DemoController(CricketCoach cricketCoach) {
+//    public DemoController(CricketSCoach cricketCoach) {
 //        this.cricketCoach = cricketCoach;
 //    }
 

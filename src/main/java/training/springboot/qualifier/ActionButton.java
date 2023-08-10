@@ -1,4 +1,4 @@
-package training.springboot.constructorInjection.practice;
+package training.springboot.qualifier;
 
 public interface ActionButton {
     String greets();

@@ -1,6 +1,5 @@
-package training.springboot.constructorInjection.practice;
+package training.springboot.qualifier;
 
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 @Service

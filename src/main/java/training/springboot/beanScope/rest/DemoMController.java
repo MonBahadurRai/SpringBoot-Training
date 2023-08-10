@@ -1,53 +1,43 @@
-package training.springboot.rest;
+package training.springboot.beanScope.rest;
+
 
 import jakarta.annotation.PostConstruct;
 import jakarta.annotation.PreDestroy;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.PropertySource;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
+import training.springboot.beanScope.common.Coach;
 
 @RestController
-
-@PropertySource("classpath:domain.properties")
-public class FunRestController {
+public class DemoMController {
 
 
-    //Reading the application.properties file values
-    @Value("${project.name}")
-    private String projectName;
-    //  project.name=Spring Boot Training
 
-    //    Injecting the application.properties custom properties
-    @Value("${learning.mode}")
-    private String learningMode;
+    // define a private field for the dependency
+    private Coach myCoach;
+    private Coach anotherCoach;
 
-
-    //    From Custom Properties
-    @Value("${route.url}")
-    private String routeUrl;
-
-    @Value("${route.code}")
-    private int routeCode;
-
-
-    //Expose "/" that return "HELLO WORLD"
-    @GetMapping(value = "")
-    private String sayHelloWorld() {
-        System.out.println(this.projectName);
-        System.out.println(this.learningMode);
-        return this.projectName + " : " + this.learningMode + " == > " + this.routeUrl + " at " + this.routeCode;
+    @Autowired
+    public DemoMController(
+            @Qualifier("cricketSCoach") Coach theCoach,
+            @Qualifier("cricketSCoach") Coach theAnotherCoach) {
+        System.out.println("In constructor: " + getClass().getSimpleName());
+        myCoach = theCoach;
+        anotherCoach = theAnotherCoach;
     }
 
-    @GetMapping(value = "mon")
-    private String sayMon() {
-        System.out.println(this.projectName);
-        return "Hello Mon!";
+    @GetMapping("/dailyworkouts")
+    public String getDailyWorkout() {
+        return myCoach.getDailyWorkout();
     }
 
+    @GetMapping("/check")
+    public String check() {
+        return "Comparing beans: myCoach == anotherCoach, " + (myCoach == anotherCoach);
+    }
     @PostConstruct
     public void initController() {
-
         System.out.println("Initializing FunRestController");
         /**
          * The @PostConstruct annotation is used in Spring to indicate a method that should be executed after a bean has been initialized by the Spring container, but before it is made available for use. This annotation is commonly used to perform initialization tasks for beans, such as setting up resources, configuring properties, or preparing the bean for use.
@@ -66,4 +56,11 @@ public class FunRestController {
          * In a Spring Boot application, the @PreDestroy annotated method will be executed when the application context is being closed. This happens when the Spring Boot application is shutting down, which can occur when the application is explicitly terminated or when it receives a termination signal (such as pressing Ctrl+C in the console).
          */
     }
+
 }
+
+
+
+
+
+
