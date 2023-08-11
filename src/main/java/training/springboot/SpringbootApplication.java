@@ -18,7 +18,7 @@ public class SpringbootApplication {
 	@Bean
 	public CommandLineRunner commandLineRunner(StudentDao studentDao) {
 		return runner -> {
-//			createAndSaveStudent(studentDao);
+			createAndSaveStudent(studentDao);
 //			read Student by
 //			reaStudentById(studentDao);
 //
@@ -80,7 +80,7 @@ public class SpringbootApplication {
 		//create the student object
 		System.out.println("Creating new Student");
 //
-		Student student = new Student("Paul", "Doe", "paul@luv2Code.com");
+		Student student = new Student("karma", "rae", "kares.com");
 		//save the student object
 		studentDao.save(student);
 		//display id of the saved student object
