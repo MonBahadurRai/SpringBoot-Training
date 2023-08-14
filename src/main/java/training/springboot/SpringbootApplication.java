@@ -4,8 +4,17 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
-import training.springboot.dao.StudentDao;
-import training.springboot.entity.Student;
+import training.springboot.OneToOne.dao.AppDao;
+import training.springboot.OneToOne.entity.Instructor;
+import training.springboot.OneToOne.entity.InstructorDetail;
+import training.springboot.oneToMany.entity.CourseOneTwoMany;
+import training.springboot.oneToMany.entity.InstructorDetailOneTwoMany;
+import training.springboot.oneToMany.entity.InstructorOneTwoMany;
+
+import java.util.ArrayList;
+import java.util.List;
+//import training.springboot.oneToMany.entity.CourseOneTwoMany;
+//import training.springboot.oneToMany.entity.InstructorOneTwoMany;
 
 @SpringBootApplication
 public class SpringbootApplication {
@@ -14,82 +23,86 @@ public class SpringbootApplication {
 		SpringApplication.run(SpringbootApplication.class, args);
 	}
 
-
 	@Bean
-	public CommandLineRunner commandLineRunner(StudentDao studentDao) {
+	public CommandLineRunner commandLineRunner(AppDao appDao) {
 		return runner -> {
-			createAndSaveStudent(studentDao);
-//			read Student by
-//			reaStudentById(studentDao);
-//
-//			readAllStudents(studentDao);
+//			createInstructor(appDao);
+//			findInstructors(appDao);
 
-//			System.out.println(studentDao.getStudentByFirstName("PER"));
-//			System.out.println(studentDao.getStudentByFirstName("PERMOSd"));
-//
-////			printing Each Student
-//			studentDao.findAllStudents().forEach(System.out::println);
-//
+//			appDao.deleteInstructor(4);
 
 
-//			studentDao.findByLastName("DAVIL").forEach(System.out::println);
-//			updateStudent(studentDao);
-//			deleteStudent(studentDao);
+//			findInstructorsDetail(appDao);
 //
-//			studentDao.sortStudentBy(" id desc ").forEach(System.out::println);
+//			appDao.deleteInstructionDetail(4);
+//			findInstructorsDetail(appDao);
 
-			System.out.println("Deleting All the Student records..");
-			int statusRow = studentDao.deleteAll();
-			if (statusRow > 0) {
-				System.out.println("Finished Deleting All the Student records");
-			} else if (statusRow == 0) {
-				System.out.println("Empty Record!!");
-			} else {
-				System.out.println("Failed to Delete All the Student records");
-			}
+
+//			createInstructorWithCourses(appDao);
+
+			InstructorOneTwoMany instructorOneTwoMany = appDao.findInstructorById(1);
+			System.out.println(instructorOneTwoMany);
+
+//			findInstructorsWithCourse(appDao);
+
+
 		};
-	}
-
-	private void deleteStudent(StudentDao studentDao) {
-		studentDao.delete(1);
-	}
-
-	private void updateStudent(StudentDao studentDao) {
-		int studentId = 2;
-//		Getting the
-		System.out.println("Getting the student Id ");
-		Student queredStudent = studentDao.findById(studentId);
-
-//		Changing the Student Detail
-		queredStudent.setLastName("JOSD");
-		queredStudent.setFirstName("we");
-		studentDao.update(queredStudent);
 
 
 	}
 
-	private void readAllStudents(StudentDao studentDao) {
-		System.out.println("=== Students List ======8888===============================================================");
-		studentDao.studentsListResult().forEach(System.out::println);
-		System.out.println("==========================================================================================");
+	private void findInstructorsWithCourse(AppDao appDao) {
+		int theId = 1;
+		System.out.println("Finding instructor id :" + theId);
+		InstructorOneTwoMany instructorOneTwoMany = appDao.findInstructorById(theId);
+
+		appDao.findCoursesByInstructorId(theId).forEach(System.out::println);
+
+		System.out.println(appDao.findInstructorByIdJoinFetch(1));
+		System.out.println(instructorOneTwoMany.getInstructorDetail());
+	}
+
+	private void createInstructorWithCourses(AppDao appDao) {
+
+		InstructorOneTwoMany tempInstructor = new InstructorOneTwoMany("Karma", "Tshering", "karma@gmail.com");
+		InstructorDetailOneTwoMany tempInstructorDetail = new InstructorDetailOneTwoMany("youtube@karma", "Talkiing");
+		tempInstructor.setInstructorDetail(tempInstructorDetail);
+
+		List<CourseOneTwoMany> courses = new ArrayList<>();
+		courses.add(new CourseOneTwoMany("SPRING Core"));
+		courses.add(new CourseOneTwoMany("SPRING SPRING JPA"));
+		courses.add(new CourseOneTwoMany("SPRING MVC"));
+
+		courses.forEach(tempInstructor::add);
+
+		appDao.save(tempInstructor);
+
+
+//		findInstructorsWithCourse(appDao);
+//		 InstructorOneTwoMany instructorOneTwoMany().
+
+//		appDao.update();
+	}
+
+	private void findInstructorsDetail(AppDao appDao) {
+		InstructorDetail instructorDetail = appDao.instructorDetail(4);
+		System.out.println(instructorDetail);
+		if (instructorDetail != null) {
+			System.out.println(instructorDetail.getInstructor());
+		}
+
 	}
 
 
-	//	createAndSaveStudent method
-	private void createAndSaveStudent(StudentDao studentDao) {
-		//create the student object
-		System.out.println("Creating new Student");
-//
-		Student student = new Student("karma", "rae", "kares.com");
-		//save the student object
-		studentDao.save(student);
-		//display id of the saved student object
-		System.out.println("Saved Student Id :" + student.getId());
+	private void findInstructors(AppDao appDao) {
+		System.out.println(appDao.findInstructor(3));
 	}
 
-	// read the student by Id
-	private void reaStudentById(StudentDao studentDao) {
-		System.out.println(studentDao.findById(2));
+	private void createInstructor(AppDao appDao) {
+		Instructor tempInstructor = new Instructor("Karma", "Tshering", "karma@gmail.com");
+		InstructorDetail tempInstructorDetail = new InstructorDetail("youtube@karma", "Talkiing");
+		tempInstructor.setInstructorDetail(tempInstructorDetail);
+		appDao.save(tempInstructor);
 	}
 
 }

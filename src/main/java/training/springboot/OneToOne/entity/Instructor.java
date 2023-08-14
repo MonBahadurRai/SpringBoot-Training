@@ -1,46 +1,41 @@
-package training.springboot.entity;
+package training.springboot.OneToOne.entity;
 
 import jakarta.persistence.*;
 
-
 @Entity
-@Table(name = "student")
-public class Student {
-    //define fields
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
-    private int id;
+@Table(name = "instructor")
+public class Instructor {
 
-
-    @Column(name = "First_name")
-    private String firstName;
-
-    @Column(name = "last_name")
-    private String lastName;
-
-    @Column(name = "email")
-    private String email;
-
-
-    //define constructor
-
-    public Student() {
+    public Instructor() {
     }
 
-    public Student(String firstName, String lastName, String email) {
+    public Instructor(String firstName, String lastName, String email) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
     }
 
-    //define setters/GETTER
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
+    private Integer id;
 
-    public int getId() {
+    @Column(name = "first_name")
+    private String firstName;
+    @Column(name = "last_name")
+    private String lastName;
+    @Column(name = "email")
+    private String email;
+
+    @JoinColumn(name = "instructor_detail_id")
+    @OneToOne(cascade = CascadeType.ALL)
+    private InstructorDetail instructorDetail;
+
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -68,15 +63,24 @@ public class Student {
         this.email = email;
     }
 
+    public InstructorDetail getInstructorDetail() {
+        return instructorDetail;
+    }
 
-    //define toString method
+    public void setInstructorDetail(InstructorDetail instructorDetail) {
+        this.instructorDetail = instructorDetail;
+    }
+
+
     @Override
     public String toString() {
-        return "Student{" +
+        return "InstructorOneTwoMany{" +
                 "id=" + id +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", email='" + email + '\'' +
+                ", instructorDetail=" + instructorDetail +
                 '}';
     }
 }
+

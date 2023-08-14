@@ -14,7 +14,7 @@ CREATE TABLE `instructor_detail` (
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
 
 
-CREATE TABLE `instructor` (
+CREATE TABLE `instructorOneTwoMany` (
   `id` int NOT NULL AUTO_INCREMENT,
   `first_name` varchar(45) DEFAULT NULL,
   `last_name` varchar(45) DEFAULT NULL,
@@ -27,7 +27,7 @@ CREATE TABLE `instructor` (
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
 
 
-CREATE TABLE `course` (
+CREATE TABLE `courseOneTwoMany` (
   `id` int NOT NULL AUTO_INCREMENT,
   `title` varchar(128) DEFAULT NULL,
   `instructor_id` int DEFAULT NULL,
@@ -40,7 +40,7 @@ CREATE TABLE `course` (
   
   CONSTRAINT `FK_INSTRUCTOR` 
   FOREIGN KEY (`instructor_id`) 
-  REFERENCES `instructor` (`id`) 
+  REFERENCES `instructorOneTwoMany` (`id`)
   
   ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=latin1;
@@ -57,7 +57,7 @@ CREATE TABLE `review` (
 
   CONSTRAINT `FK_COURSE` 
   FOREIGN KEY (`course_id`) 
-  REFERENCES `course` (`id`) 
+  REFERENCES `courseOneTwoMany` (`id`)
 
   ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
